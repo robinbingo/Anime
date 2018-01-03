@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.robinbingo.anime.mapper.TAnimeMapper">
+  <resultMap id="BaseResultMap" type="xyz.robinbingo.anime.model.TAnime">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="foreign_name" jdbcType="VARCHAR" property="foreignName" />
+    <result column="chinese_name" jdbcType="VARCHAR" property="chineseName" />
+    <result column="episode" jdbcType="INTEGER" property="episode" />
+    <result column="broadcast_start" jdbcType="VARCHAR" property="broadcastStart" />
+    <result column="broadcast_end" jdbcType="VARCHAR" property="broadcastEnd" />
+    <result column="is_finished" jdbcType="VARCHAR" property="isFinished" />
+    <result column="broadcast_week" jdbcType="VARCHAR" property="broadcastWeek" />
+    <result column="is_included" jdbcType="VARCHAR" property="isIncluded" />
+    <result column="is_watched" jdbcType="VARCHAR" property="isWatched" />
+    <result column="watch_time" jdbcType="VARCHAR" property="watchTime" />
+    <result column="star" jdbcType="DECIMAL" property="star" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, foreign_name, chinese_name, episode, broadcast_start, broadcast_end, is_finished, 
+    broadcast_week, is_included, is_watched, watch_time, star, remark, create_time, update_time
+  </sql>
+  <select id="selectByExample" parameterType="xyz.robinbingo.anime.model.TAnimeExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_anime
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_anime
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_anime
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="xyz.robinbingo.anime.model.TAnimeExample">
+    delete from t_anime
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="xyz.robinbingo.anime.model.TAnime">
+    insert into t_anime (id, foreign_name, chinese_name, 
+      episode, broadcast_start, broadcast_end, 
+      is_finished, broadcast_week, is_included, 
+      is_watched, watch_time, star, 
+      remark, create_time, update_time
+      )
+    values (#{id,jdbcType=INTEGER}, #{foreignName,jdbcType=VARCHAR}, #{chineseName,jdbcType=VARCHAR}, 
+      #{episode,jdbcType=INTEGER}, #{broadcastStart,jdbcType=VARCHAR}, #{broadcastEnd,jdbcType=VARCHAR}, 
+      #{isFinished,jdbcType=VARCHAR}, #{broadcastWeek,jdbcType=VARCHAR}, #{isIncluded,jdbcType=VARCHAR}, 
+      #{isWatched,jdbcType=VARCHAR}, #{watchTime,jdbcType=VARCHAR}, #{star,jdbcType=DECIMAL}, 
+      #{remark,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="xyz.robinbingo.anime.model.TAnime">
+    insert into t_anime
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="foreignName != null">
+        foreign_name,
+      </if>
+      <if test="chineseName != null">
+        chinese_name,
+      </if>
+      <if test="episode != null">
+        episode,
+      </if>
+      <if test="broadcastStart != null">
+        broadcast_start,
+      </if>
+      <if test="broadcastEnd != null">
+        broadcast_end,
+      </if>
+      <if test="isFinished != null">
+        is_finished,
+      </if>
+      <if test="broadcastWeek != null">
+        broadcast_week,
+      </if>
+      <if test="isIncluded != null">
+        is_included,
+      </if>
+      <if test="isWatched != null">
+        is_watched,
+      </if>
+      <if test="watchTime != null">
+        watch_time,
+      </if>
+      <if test="star != null">
+        star,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="foreignName != null">
+        #{foreignName,jdbcType=VARCHAR},
+      </if>
+      <if test="chineseName != null">
+        #{chineseName,jdbcType=VARCHAR},
+      </if>
+      <if test="episode != null">
+        #{episode,jdbcType=INTEGER},
+      </if>
+      <if test="broadcastStart != null">
+        #{broadcastStart,jdbcType=VARCHAR},
+      </if>
+      <if test="broadcastEnd != null">
+        #{broadcastEnd,jdbcType=VARCHAR},
+      </if>
+      <if test="isFinished != null">
+        #{isFinished,jdbcType=VARCHAR},
+      </if>
+      <if test="broadcastWeek != null">
+        #{broadcastWeek,jdbcType=VARCHAR},
+      </if>
+      <if test="isIncluded != null">
+        #{isIncluded,jdbcType=VARCHAR},
+      </if>
+      <if test="isWatched != null">
+        #{isWatched,jdbcType=VARCHAR},
+      </if>
+      <if test="watchTime != null">
+        #{watchTime,jdbcType=VARCHAR},
+      </if>
+      <if test="star != null">
+        #{star,jdbcType=DECIMAL},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="xyz.robinbingo.anime.model.TAnimeExample" resultType="java.lang.Long">
+    select count(*) from t_anime
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_anime
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.foreignName != null">
+        foreign_name = #{record.foreignName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.chineseName != null">
+        chinese_name = #{record.chineseName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.episode != null">
+        episode = #{record.episode,jdbcType=INTEGER},
+      </if>
+      <if test="record.broadcastStart != null">
+        broadcast_start = #{record.broadcastStart,jdbcType=VARCHAR},
+      </if>
+      <if test="record.broadcastEnd != null">
+        broadcast_end = #{record.broadcastEnd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isFinished != null">
+        is_finished = #{record.isFinished,jdbcType=VARCHAR},
+      </if>
+      <if test="record.broadcastWeek != null">
+        broadcast_week = #{record.broadcastWeek,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isIncluded != null">
+        is_included = #{record.isIncluded,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isWatched != null">
+        is_watched = #{record.isWatched,jdbcType=VARCHAR},
+      </if>
+      <if test="record.watchTime != null">
+        watch_time = #{record.watchTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.star != null">
+        star = #{record.star,jdbcType=DECIMAL},
+      </if>
+      <if test="record.remark != null">
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_anime
+    set id = #{record.id,jdbcType=INTEGER},
+      foreign_name = #{record.foreignName,jdbcType=VARCHAR},
+      chinese_name = #{record.chineseName,jdbcType=VARCHAR},
+      episode = #{record.episode,jdbcType=INTEGER},
+      broadcast_start = #{record.broadcastStart,jdbcType=VARCHAR},
+      broadcast_end = #{record.broadcastEnd,jdbcType=VARCHAR},
+      is_finished = #{record.isFinished,jdbcType=VARCHAR},
+      broadcast_week = #{record.broadcastWeek,jdbcType=VARCHAR},
+      is_included = #{record.isIncluded,jdbcType=VARCHAR},
+      is_watched = #{record.isWatched,jdbcType=VARCHAR},
+      watch_time = #{record.watchTime,jdbcType=VARCHAR},
+      star = #{record.star,jdbcType=DECIMAL},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="xyz.robinbingo.anime.model.TAnime">
+    update t_anime
+    <set>
+      <if test="foreignName != null">
+        foreign_name = #{foreignName,jdbcType=VARCHAR},
+      </if>
+      <if test="chineseName != null">
+        chinese_name = #{chineseName,jdbcType=VARCHAR},
+      </if>
+      <if test="episode != null">
+        episode = #{episode,jdbcType=INTEGER},
+      </if>
+      <if test="broadcastStart != null">
+        broadcast_start = #{broadcastStart,jdbcType=VARCHAR},
+      </if>
+      <if test="broadcastEnd != null">
+        broadcast_end = #{broadcastEnd,jdbcType=VARCHAR},
+      </if>
+      <if test="isFinished != null">
+        is_finished = #{isFinished,jdbcType=VARCHAR},
+      </if>
+      <if test="broadcastWeek != null">
+        broadcast_week = #{broadcastWeek,jdbcType=VARCHAR},
+      </if>
+      <if test="isIncluded != null">
+        is_included = #{isIncluded,jdbcType=VARCHAR},
+      </if>
+      <if test="isWatched != null">
+        is_watched = #{isWatched,jdbcType=VARCHAR},
+      </if>
+      <if test="watchTime != null">
+        watch_time = #{watchTime,jdbcType=VARCHAR},
+      </if>
+      <if test="star != null">
+        star = #{star,jdbcType=DECIMAL},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="xyz.robinbingo.anime.model.TAnime">
+    update t_anime
+    set foreign_name = #{foreignName,jdbcType=VARCHAR},
+      chinese_name = #{chineseName,jdbcType=VARCHAR},
+      episode = #{episode,jdbcType=INTEGER},
+      broadcast_start = #{broadcastStart,jdbcType=VARCHAR},
+      broadcast_end = #{broadcastEnd,jdbcType=VARCHAR},
+      is_finished = #{isFinished,jdbcType=VARCHAR},
+      broadcast_week = #{broadcastWeek,jdbcType=VARCHAR},
+      is_included = #{isIncluded,jdbcType=VARCHAR},
+      is_watched = #{isWatched,jdbcType=VARCHAR},
+      watch_time = #{watchTime,jdbcType=VARCHAR},
+      star = #{star,jdbcType=DECIMAL},
+      remark = #{remark,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
