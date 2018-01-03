@@ -1,2 +1,12 @@
 server:
   port: 8090
+
+spring:
+  datasource:
+      driver-class-name: com.mysql.jdbc.Driver
+      url: jdbc:mysql://localhost:3306/robinbingo_info?useUnicode=true&characterEncoding=utf8
+      username: root
+      password: root
+  thymeleaf:
+      cache: false
+      mode: LEGACYHTML5
